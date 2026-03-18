@@ -40,7 +40,7 @@ Turn an existing `.docx` into a repeatable SOE/public-formal version with:
 Install the Python package first:
 
 ```bash
-pip install formal-docx-polish
+pip install "git+https://github.com/Yuhamixli/formal-docx-polish.git"
 ```
 
 ## Commands

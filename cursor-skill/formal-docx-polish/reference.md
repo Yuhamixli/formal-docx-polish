@@ -25,7 +25,7 @@ into either:
 Then make sure the toolkit itself is installed:
 
 ```bash
-pip install formal-docx-polish
+pip install "git+https://github.com/Yuhamixli/formal-docx-polish.git"
 ```
 
 ## What the validator checks

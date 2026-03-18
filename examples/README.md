@@ -1,14 +1,24 @@
 # Examples
 
-This directory is intentionally light in the first version.
+This repo prefers sanitized or synthetic examples instead of internal enterprise
+materials.
 
-Recommended example set for public release:
+## Generate examples
 
-1. `request-source.docx`
-2. `request-polished.docx`
-3. `plan-source.docx`
-4. `regulation-source.docx`
-5. `validation-report.json`
+```bash
+python examples/generate_synthetic_examples.py
+```
 
-When preparing the public repo, prefer sanitized or synthetic documents instead
-of internal enterprise materials.
+Generated files will be written to:
+
+- `examples/generated/request-source.docx`
+- `examples/generated/request-polished.docx`
+- `examples/generated/plan-source.docx`
+- `examples/generated/regulation-source.docx`
+- `examples/generated/request-validation.json`
+
+These examples are intended for:
+
+- manual smoke testing
+- README screenshots later
+- CI-adjacent local verification

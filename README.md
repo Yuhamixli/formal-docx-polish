@@ -2,6 +2,9 @@
 
 Reusable Chinese SOE/public-formal DOCX polishing toolkit.
 
+[![CI](https://github.com/Yuhamixli/formal-docx-polish/actions/workflows/ci.yml/badge.svg)](https://github.com/Yuhamixli/formal-docx-polish/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
+
 This repo packages three things together:
 
 1. a Python library for polishing and validating existing `.docx` files
@@ -14,6 +17,19 @@ It is designed for high-frequency scenarios such as:
 - 公文/请示/方案/制度/会议材料版式统一
 - Word 文档页边距、行距、字号、字体、标题层级统一
 - “先校验 -> 再精修 -> 再校验”的可重复流程
+
+## Why this exists
+
+There are many generic DOCX libraries, but very few tools that directly target
+the repetitive “formal material brushing” workflow common in Chinese SOE/public
+office writing:
+
+- content is already mostly done
+- structure is mostly right
+- the document still looks inconsistent
+- the review feedback is often about spacing, headings, margins, fonts, and tables
+
+This toolkit focuses on that narrow, repeatable layer.
 
 ## Scope
 
@@ -34,7 +50,27 @@ This toolkit does **not** try to fully replace:
 - 发文字号 / 签发人 / 印章区
 - highly custom visual layout with floating shapes and complex art
 
+## Feature summary
+
+| Capability | Status |
+| --- | --- |
+| Existing `.docx` validation | Yes |
+| Existing `.docx` formal polish | Yes |
+| Request / plan / report / regulation / meeting profiles | Yes |
+| Cursor skill bundle | Yes |
+| Synthetic example generator | Yes |
+| Strict red-head issuing template | Not yet |
+| Visual diff / screenshot verification | Not yet |
+
 ## Install
+
+From GitHub:
+
+```bash
+pip install "git+https://github.com/Yuhamixli/formal-docx-polish.git"
+```
+
+For local development:
 
 ```bash
 pip install -e .
@@ -65,6 +101,12 @@ Polish into a new file:
 formal-docx-polish polish "input.docx" "output.docx" --kind request
 ```
 
+Generate synthetic examples:
+
+```bash
+python examples/generate_synthetic_examples.py
+```
+
 Supported document kinds:
 
 - `generic`
@@ -73,6 +115,34 @@ Supported document kinds:
 - `report`
 - `regulation`
 - `meeting`
+
+## Python API
+
+```python
+from formal_docx_polish import polish_file, validate_file
+
+result = validate_file("request-source.docx", document_kind="request")
+print(result["ok"], result["issues"])
+
+polish_file(
+    "request-source.docx",
+    "request-polished.docx",
+    document_kind="request",
+)
+```
+
+## Typical validation output
+
+```json
+{
+  "ok": false,
+  "document_kind": "request",
+  "issues": [
+    "top_margin_cm: expected 3.7, got 3.2",
+    "heading1 line spacing mismatch: '一、请示背景' expected 28.0, got null"
+  ]
+}
+```
 
 ## Repo layout
 
@@ -89,6 +159,8 @@ formal-docx-polish/
 │   ├── SKILL.md
 │   ├── reference.md
 │   └── scripts/
+├── examples/
+│   └── generate_synthetic_examples.py
 └── tests/
 ```
 
@@ -102,7 +174,7 @@ The `cursor-skill/formal-docx-polish/` directory can be copied into:
 The Cursor skill expects the Python package to be installed first:
 
 ```bash
-pip install formal-docx-polish
+pip install "git+https://github.com/Yuhamixli/formal-docx-polish.git"
 ```
 
 or for a local clone:
@@ -125,6 +197,25 @@ The default profile lives in:
 - `src/formal_docx_polish/profiles/soe-formal-docx-v1.json`
 
 You can duplicate and adjust it for your own standards.
+
+## Example documents
+
+Run:
+
+```bash
+python examples/generate_synthetic_examples.py
+```
+
+This creates sanitized synthetic examples under `examples/generated/`, so the
+repo can demonstrate the workflow without publishing internal enterprise files.
+
+## Roadmap
+
+- stricter request-ending and主送 checks
+- regulation chapter/article continuity checks
+- meeting-material structure checks
+- optional PyPI publishing
+- richer visual verification
 
 ## Status
 
