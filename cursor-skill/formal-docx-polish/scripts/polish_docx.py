@@ -1,0 +1,19 @@
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+
+REPO_ROOT = Path(__file__).resolve().parents[4]
+try:
+    from formal_docx_polish.cli import main  # type: ignore  # noqa: E402
+except ImportError:
+    SRC_DIR = REPO_ROOT / "src"
+    if str(SRC_DIR) not in sys.path:
+        sys.path.insert(0, str(SRC_DIR))
+    from formal_docx_polish.cli import main  # type: ignore  # noqa: E402
+
+
+if __name__ == "__main__":
+    sys.argv.insert(1, "polish")
+    raise SystemExit(main())

@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "formal-docx-polish"
+version = "0.1.0"
+description = "Chinese SOE/public-formal DOCX polish and validation toolkit"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+  { name = "Yuhamixli" }
+]
+dependencies = [
+  "python-docx>=1.1.2"
+]
+keywords = [
+  "docx",
+  "word",
+  "gongwen",
+  "formal-document",
+  "soe",
+  "cursor-skill"
+]
+
+[project.urls]
+Homepage = "https://github.com/Yuhamixli/formal-docx-polish"
+Repository = "https://github.com/Yuhamixli/formal-docx-polish"
+
+[project.scripts]
+formal-docx-polish = "formal_docx_polish.cli:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.package-data]
+formal_docx_polish = ["profiles/*.json"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
