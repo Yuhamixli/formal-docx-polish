@@ -1,4 +1,4 @@
-# formal-docx-polish
+# formal-docx-polish 公文格式
 
 Reusable Chinese SOE/public-formal DOCX polishing toolkit.
 
